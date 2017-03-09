@@ -1,4 +1,4 @@
-__author__ = 'sebasanper'
+__author__ = 'sebasanper' 
 from random import random
 from numpy import std
 from math import ceil, floor
