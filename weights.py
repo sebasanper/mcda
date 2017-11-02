@@ -3,7 +3,7 @@ from random import random
 from numpy import std
 from math import ceil, floor
 files = open('sensitivity.dat', 'w')
-out = open('statistics.dat', 'w')
+out = open('statistics_ioannis.dat', 'w')
 m = [[0.8, 0.3, 0.4], [0.7, 0.2, 0.7], [0.5, 0.3, 0.65], [0.3, 0.7, 0.2], [0.35, 0.5, 0.6]]
 dim = 5
 n = 400.0

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PCA.iml" filepath="$PROJECT_DIR$/.idea/PCA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MCDA.iml" filepath="$PROJECT_DIR$/.idea/MCDA.iml" />
     </modules>
   </component>
 </project>
