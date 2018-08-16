@@ -2,8 +2,8 @@ __author__ = 'sebasanper'
 from random import random
 from numpy import std
 from math import ceil, floor, fabs
-files1 = open('time_stats.dat', 'r')
-files2 = open('efficiency_stats.dat', 'r')  # For TDA: Time, Detail, Accuracy. Order of importance.
+files1 = open('mc_data.dat', 'r')
+# files2 = open('efficiency_stats.dat', 'r')  # For TDA: Time, Detail, Accuracy. Order of importance.
 
 def mean(vect):
     return float(sum(vect)) / float(len(vect))
@@ -27,25 +27,30 @@ def median_function(vector):
         return vector[len(vector) / 2]
 
 
-exe_time = []
-accuracy = []
-detail = []
+c1 = []
+c2 = []
+c3 = []
+c4 = []
+c5 = []
 for line1 in files1:
-    columns1 = line1.split()
-    exe_time.append((37.203561 - float(columns1[5])) / (37.203561 - 0.836113))
-    detail.append(float(columns1[8]))
-for line2 in files2:
-    columns2 = line2.split()
-    accuracy.append((10.8964 - fabs(float(columns2[5]) - 89.0)) / (10.8964 - 0.01338))
+    cols = line1.split()
+    c1.append(float(cols[0]))
+    c2.append(float(cols[1]))
+    c3.append(float(cols[2]))
+    c4.append(float(cols[3]))
+    c5.append(float(cols[4]))
+# for line2 in files2:
+#     columns2 = line2.split()
+#     accuracy.append((10.8964 - fabs(float(columns2[5]) - 89.0)) / (10.8964 - 0.01338))
 m = []
-for g in range(len(accuracy)):
-    m.append([exe_time[g], accuracy[g], detail[g]])
-n_alt = len(accuracy)
+for g in range(len(c1)):
+    m.append([c1[g], c2[g], c3[g], c4[g], c5[g]])
+n_alt = len(c1)
 dim = len(m)
 n = 10000.0  # MonteCarlo simulations
 n1 = int(n)
 
-analysis = ['TDA', 'TAD', 'ALL']
+analysis = ['ALL']
 for run in analysis:
     if run == 'TDA':
         out1 = open('TDA_ranks_weights.dat', 'w')  # For TDA: Time, Detail, Accuracy. Order of importance.
@@ -98,11 +103,13 @@ for run in analysis:
             w[1] = o[1]
             w[2] = o[2]
         else:
-            p = [random(), random()]
+            p = [random() for _ in range(4)]
             p.sort(reverse=True)
             w[0] = 1.0 - p[0]  # No ranking of the criteria at all. All possibilities considered.
             w[1] = p[0] - p[1]
-            w[2] = p[1]
+            w[2] = p[1] - p[2]
+            w[3] = p[2] - p[3]
+            w[4] = p[3]
 
         for l in range(n_alt):
             q[l] = [a * b for a, b in zip(m[l], w)]
@@ -128,7 +135,7 @@ for run in analysis:
         # Write ranking and weights to file.
         for i in range(n_alt):
             out1.write('{0:d} '.format(r[i][1]))
-        out1.write('{0:f} {1:f} {2:f}\n'.format(w[0], w[2], w[1]))
+        out1.write('{} {} {} {} {}\n'.format(w[0], w[1], w[2], w[3], w[4]))
 
     # Calculates the median and other statistical measures of every alternative.
     for alt in range(n_alt):
@@ -148,4 +155,4 @@ for run in analysis:
     out2.close()
     out3.close()
 files1.close()
-files2.close()
+# files2.close()
